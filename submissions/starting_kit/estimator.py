@@ -11,7 +11,7 @@ import xgboost as xgb
 
 class Classifier(BaseEstimator):
     def __init__(self):
-        self.model = xgb.XGBClassifier(max_depth= 3,n_estimators= 100, learning_rate= 0.1  , objective= 'binary:logistic')
+        self.model = xgb.XGBClassifier()
 
     def fit(self, X, y):
         self.model.fit(X, y)
