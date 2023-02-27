@@ -6,13 +6,12 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.neighbors import KNeighborsClassifier
-
+import xgboost as xgb
 
 
 class Classifier(BaseEstimator):
     def __init__(self):
-        self.model = KNeighborsClassifier()
+        self.model = xgb.XGBClassifier(max_depth= 3,n_estimators= 100, learning_rate= 0.1  , objective= 'binary:logistic')
 
     def fit(self, X, y):
         self.model.fit(X, y)
@@ -52,5 +51,5 @@ def get_estimator():
 
     classifier = Classifier()
 
-    pipe = make_pipeline( preprocessor,  classifier)
+    pipe = make_pipeline( preprocessor, classifier)
     return pipe

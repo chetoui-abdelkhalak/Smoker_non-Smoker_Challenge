@@ -6,13 +6,13 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 
 
 class Classifier(BaseEstimator):
     def __init__(self):
-        self.model = RandomForestClassifier()  
+        self.model = KNeighborsClassifier()
 
     def fit(self, X, y):
         self.model.fit(X, y)
@@ -27,7 +27,7 @@ def get_estimator():
                           'hearing(left)', 'hearing(right)', 'systolic', 'relaxation', 'fasting blood sugar', 'Cholesterol', 
                           'triglyceride', 'HDL', 'LDL', 'hemoglobin', 'Urine protein', 'serum creatinine', 'AST', 'ALT', 
                           'Gtp']
-    cat_cols =  ['gender', 'tartar','dental caries']
+    cat_cols =  ['gender', 'tartar','dental caries' ]
   
     #Preprocessing for numerical columns in the dataset
 
@@ -52,5 +52,5 @@ def get_estimator():
 
     classifier = Classifier()
 
-    pipe = make_pipeline( preprocessor, classifier)
+    pipe = make_pipeline( preprocessor,  classifier)
     return pipe

@@ -25,6 +25,7 @@ problem_title = "Smoker-non Smoker classification"
 # Worklow element
 # -----------------------------------------------------------------------------
 
+workflow = rw.workflows.Estimator()
 
 
 # -----------------------------------------------------------------------------
@@ -36,7 +37,6 @@ _prediction_label_names = [0, 1]
 
 Predictions = rw.prediction_types.make_multiclass(label_names=_prediction_label_names)
 
-workflow = rw.workflows.Estimator()
 
 
 
@@ -44,74 +44,7 @@ workflow = rw.workflows.Estimator()
 # Score types
 # -----------------------------------------------------------------------------
 
-'''
-class PointwiseLogLoss(BaseScoreType):
-    # subclass BaseScoreType to use raw y_pred (proba's)
-    is_lower_the_better = True
-    minimum = 0.0
-    maximum = np.inf
 
-    def __init__(self, name="pw_ll", precision=2):
-        self.name = name
-        self.precision = precision
-
-    def __call__(self, y_true, y_pred):
-        score = log_loss(y_true[:, 1:], y_pred[:, 1:])
-        return score
-
-
-class PointwisePrecision(ClassifierBaseScoreType):
-    is_lower_the_better = False
-    minimum = 0.0
-    maximum = 1.0
-
-    def __init__(self, name="pw_prec", precision=2):
-        self.name = name
-        self.precision = precision
-
-    def __call__(self, y_true_label_index, y_pred_label_index):
-        score = precision_score(y_true_label_index, y_pred_label_index)
-        return score
-
-
-class PointwiseRecall(ClassifierBaseScoreType):
-    is_lower_the_better = False
-    minimum = 0.0
-    maximum = 1.0
-
-    def __init__(self, name="pw_rec", precision=2):
-        self.name = name
-        self.precision = precision
-
-    def __call__(self, y_true_label_index, y_pred_label_index):
-        score = recall_score(y_true_label_index, y_pred_label_index)
-        return score
-
-score_types = [
-    # log-loss
-    PointwiseLogLoss(),
-    # point-wise (for each time step) precision and recall
-    PointwisePrecision(),
-    PointwiseRecall(),
-]
-
-class F1(BaseScoreType):
-    is_lower_the_better = False
-    minimum = 0.0
-    maximum = 1.0
-
-    def __init__(self, name="f1-score", precision=4):
-        self.name = name
-        self.precision = precision
-
-    def __call__(self, y_true, y_pred):
-        f1 = f1_score(y_true, y_pred)
-        return f1
-
-score_types = [
-    F1(name="f1-score"),
-]
-'''
 score_types = [
     rw.score_types.ROCAUC(name='auc'),
     rw.score_types.Accuracy(name='acc'),
@@ -123,11 +56,6 @@ score_types = [
 # -----------------------------------------------------------------------------
 
 
-'''
-def get_cv(X, y):
-    cv = ShuffleSplit(n_splits=8, test_size=0.20, random_state=42)
-    return cv.split(X, y)
-'''
 def get_cv(X, y):
     # using 5 folds as default
     k = 5
