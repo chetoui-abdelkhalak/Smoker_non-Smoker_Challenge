@@ -30,7 +30,7 @@ $ pip install -r requirements.txt
 
 *The dataset is available in the data folder.*
 
-The starting kit consists on 2 classifiers:
+The starting kit consists of 3 classifiers:
 
 -Logistic Regression
 
