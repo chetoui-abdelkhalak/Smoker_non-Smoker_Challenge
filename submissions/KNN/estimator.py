@@ -33,7 +33,6 @@ def get_estimator():
 
     #Let us note that we do not need to do the imputer since our dataset does not have missing values.
 
-
     num_pipeline = Pipeline(steps=[
       ('scaler', StandardScaler())
     ])  
